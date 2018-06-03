@@ -2,7 +2,7 @@
     <div class="header">
       <div class="header__inner">
         <div class="header__logo">
-          <img src="./../assets/newspaper.svg" width="24" height="24">
+          <img src="./../assets/globe.svg" width="24" height="24">
           <h1>Economic News</h1>
         </div>
         <div class="header__menu">
@@ -57,6 +57,7 @@ export default {
 .header__logo h1 {
   margin: 0;
   font-size: 20px;
+  font-weight: 800;
   font-weight: 400;
   color: #fff;
   margin-left: 5px;
@@ -65,6 +66,7 @@ export default {
 .header__menu {
   color: #a8a8a8;
   height: inherit;
+  font-size: 14px;
 }
 
 .header__menu-item {
@@ -92,12 +94,12 @@ export default {
   position: absolute;
   content: '';
   top: 50%;
-  margin-top: -3px;
-  right: -12px;
+  margin-top: -1px;
+  right: -6px;
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 6px 6px 0 6px;
+  border-width: 4px 4px 0 4px;
   border-color: #999 transparent transparent transparent;
 }
 
@@ -119,6 +121,7 @@ export default {
 
 .header__lang-item:hover {
   color: #fff;
+  background-color: #ea4c89;
 }
 
 .sub {
