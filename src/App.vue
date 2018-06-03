@@ -1,14 +1,9 @@
 <template>
   <div id="app">
-    <Header />
+    <Header :langs="langs"/>
 
 
-
-    <div v-if="newsLoading">LOADING</div>
-    <div v-else>FINISED LOADING</div>
-    <div v-for="(lang, code) in langs">
-      <div @click="fetchNews(code)">{{lang}}, {{code}}</div>
-    </div>
+    
     <div class="list" v-if="news.length">
       
       <div class="list__item" v-for="{ EventName, CurrencyCode, ReleaseDate, Id } in news" :key="Id">
@@ -40,13 +35,16 @@ export default {
   data() {
     return  {
       langs: {
-        ru: 'Русский',
-        en: 'English',
-        es: 'Español',
-        zh: '中文',
-        pt: 'Português',
-        ja: '日本語',
-        de: 'Deutsch'
+        list: {
+          ru: 'Русский',
+          en: 'English',
+          es: 'Español',
+          zh: '中文',
+          pt: 'Português',
+          ja: '日本語',
+          de: 'Deutsch'
+        },
+        selected: 'en'
       },
       news: [],
       newsLoading: true
@@ -90,10 +88,23 @@ export default {
 
 <style>
 
+html {
+  overflow-y: scroll;
+}
+
 body {
   margin: 0;
   padding: 0;
   background: #dfdfdf;
+}
+
+ul, li {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style-type: none;
 }
 
 #app {
