@@ -5,12 +5,20 @@
           <img src="./../assets/globe.svg" width="24" height="24">
           <h1>Economic News</h1>
         </div>
+       
         <div class="header__menu">
-          <div class="header__menu-item header__menu-item--dropdown">Jun 5 - Jun 7</div>
+          <div class="header__menu-item header__menu-item--dropdown">
+            <flat-pickr
+              v-model="date"
+              :config="flatPickrConfig"
+              @on-change="onDateSelect"
+            >
+            </flat-pickr>
+          </div>
           <div class="header__menu-item header__menu-item--dropdown sub">
             <span>{{langs.list[langs.selected]}}</span>
             <ul class="header__lang-list sub__menu">
-              <li class="header__lang-item" v-for="(lang, code) in langs.list">
+              <li class="header__lang-item" v-bind:key="code" v-for="(lang, code) in langs.list">
                 {{lang}}
               </li>
             </ul>  
@@ -23,18 +31,46 @@
 </template>
 
 <script>
+
+// import Datepicker from 'vuejs-datepicker';
+// import datepicker from 'vue-date';
+import flatPickr from 'vue-flatpickr-component';
+import './datepicker.css';
+
+const flatPickrConfig = {
+  mode: 'range',
+  altInput: true,
+  altFormat: 'M j',
+  altInputClass: 'header__menu-item--datepicker',
+  static: true
+}
+
 export default {
   name: 'Header',
   props: {
     langs: Object
   },
+  components: {
+    flatPickr
+  },
+  data() {
+    return {
+      date: ['2018-05-07', '2018-05-11'],
+      flatPickrConfig
+    }
+  },
+  methods: {
+    onDateSelect(data) {
+      console.log('Date selected', data);
+    }
+  },
   created() {
-    console.log(this.langs);
+    // console.log(Datepicker);
   }
 }
 </script>
 
-<style scoped>
+<style>
 .header {
   height: 50px;
   background-color: #2f2f2ffa;
@@ -81,9 +117,30 @@ export default {
   margin-right: 0;
 }
 
-.header__menu-item:hover {
+.header__menu-item:hover,
+.header__menu-item--datepicker:hover,
+.header__menu-item--selected {
   color: #fff;
 }
+
+.header__menu-item--datepicker {
+  display: inline-block;
+  width:130px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 14px;
+  text-align: right;
+  color: #999;
+  border:none;
+  padding: 0;
+  background-image:none;
+  background-color:transparent;
+  box-shadow: none;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+
 
 .header__menu-item--dropdown {
   position: relative;
@@ -116,7 +173,7 @@ export default {
   min-width: 100px;
   padding: 10px 10px;
   font-size: 14px;
-  color: #999;
+  color: #ccc;
 }
 
 .header__lang-item:hover {
@@ -137,6 +194,7 @@ export default {
   position: absolute;
   top:50px;
   left: -10px;
+  background-color: #3b3b3bfa;
 }
 
 </style>

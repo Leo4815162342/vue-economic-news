@@ -57,7 +57,7 @@ export default {
 
       const url = `https://www.mql5.com/${lang}/economic-calendar/widget/content?date_mode=2&from=${dateFrom}T00:00:00&to=${dateTo}T23:59:59`;
 
-      const res = await proxiedFetch(encodeURI(url));
+      const res = proxiedFetch(encodeURI(url));
       const textData = await res.text();
       const jsonData = JSON.parse(textData.replace(/<!--[\s\S]*?-->/g, ""));
 

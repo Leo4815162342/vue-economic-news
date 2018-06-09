@@ -10,7 +10,7 @@ const proxies = [
     {
         url: 'https://cors-anywhere.herokuapp.com/',
         setHeaders: true
-    },
+    }
     // {
     //     url: 'https://cors.now.sh/',
     //     setHeaders: false
