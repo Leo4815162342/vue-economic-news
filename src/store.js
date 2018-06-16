@@ -88,9 +88,9 @@ const store = new Vuex.Store({
     }
   },
   getters: {
-    allLangs: state => {
-      return Object.keys(state.langs).map(code => ({ code, name: state.langs[code]}))
-    }
+    // allLangs: state => {
+    //   return Object.keys(state.langs).map(code => ({ code, name: state.langs[code]}))
+    // }
   }
 });
 

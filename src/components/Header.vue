@@ -16,14 +16,21 @@
             </flat-pickr>
           </div>
           <div class="header__menu-item header__menu-item--dropdown sub">
-            <span>{{langs.list[langs.selected]}}</span>
+            <span>{{langs[currentLang]}}</span>
             <ul class="header__lang-list sub__menu">
-              <li class="header__lang-item" v-bind:key="code" v-for="(lang, code) in langs.list">
+              <li
+                class="header__lang-item"
+                v-bind:key="code"
+                v-for="(lang, code) in langs"
+                @click="setLanguage({lang: code})"
+              >
                 {{lang}}
               </li>
             </ul>  
           </div>
-          <div class="header__menu-item">Updated: 12.12.2018 12:12</div>
+          <div class="header__menu-item">
+            <span>Update</span>
+          </div>
         </div>
         
       </div>
@@ -34,6 +41,7 @@
 
 // import Datepicker from 'vuejs-datepicker';
 // import datepicker from 'vue-date';
+import { mapActions, mapState, mapGetters } from 'vuex';
 import flatPickr from 'vue-flatpickr-component';
 import './datepicker.css';
 
@@ -47,9 +55,6 @@ const flatPickrConfig = {
 
 export default {
   name: 'Header',
-  props: {
-    langs: Object
-  },
   components: {
     flatPickr
   },
@@ -59,10 +64,16 @@ export default {
       flatPickrConfig
     }
   },
+  computed: mapState({
+    langs: state => state.langs,
+    currentLang: state => state.currentLang,
+    isFetching: state => state.isFetching
+  }),
   methods: {
     onDateSelect(data) {
       console.log('Date selected', data);
-    }
+    },
+    ...mapActions(['setLanguage'])
   },
   created() {
     // console.log(Datepicker);
@@ -140,8 +151,6 @@ export default {
   cursor: pointer;
 }
 
-
-
 .header__menu-item--dropdown {
   position: relative;
   padding-right: 6px;
@@ -183,6 +192,8 @@ export default {
 
 .sub {
   position: relative;
+  width: 65px;
+  text-align: right;
 }
 
 .sub:hover .sub__menu {
@@ -193,8 +204,22 @@ export default {
   display: none;
   position: absolute;
   top:50px;
-  left: -10px;
+  /*left: -10px;*/
   background-color: #3b3b3bfa;
+  text-align: left;
+}
+
+@-webkit-keyframes rotating {
+    from{
+        -webkit-transform: rotate(0deg);
+    }
+    to{
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+.rotating {
+    -webkit-animation: rotating 0.6s linear infinite;
 }
 
 </style>
