@@ -1,11 +1,15 @@
 <template>
-  <div class="header__menu-item">
+  <div class="header__menu-item" :class="{ 'header__menu-item--selected': isCalOpen }">
     <flat-pickr
       v-model="date"
+      class="header__menu-item--datepicker"
       :config="datePickerConfig"
       @on-change="onDateSelect"
+      @on-open="onDatepickerOpen"
+      @on-close="onDatepickerClose"
     >
     </flat-pickr>
+    <!-- <img class="header__menu-icon" src="./../assets/calendar.svg" width="16" height="16"> -->
   </div>
 </template>
 
@@ -39,13 +43,14 @@ export default {
     return {
       date: null,
       datePickerConfig: {
+        wrap: false,
         mode: 'range',
         altInput: true,
         altFormat: 'M j',
-        altInputClass: 'header__menu-item--datepicker',
         static: true,
         locale: null
-      }
+      },
+      isCalOpen: false
     }
   },
   computed: {
@@ -82,6 +87,12 @@ export default {
         this.setFromDate({date: fromDate});
         this.setToDate({date: toDate});
 
+    },
+    onDatepickerOpen() {
+      this.isCalOpen = true;
+    },
+    onDatepickerClose() {
+      this.isCalOpen = false;
     }
   },
   created() {
@@ -91,6 +102,46 @@ export default {
 </script>
 
 <style>
+
+.flatpickr-wrapper:after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 14px;
+  height: 14px;
+  background-color: #999;
+  -webkit-mask: url(./../assets/calendar.svg) center / contain no-repeat;
+  background-size: 14px 14px;
+  top: 50%;
+  right: 0;
+  margin-top: -7px;
+  pointer-events: none;
+}
+
+.header__menu-item--selected .flatpickr-wrapper:after,
+.flatpickr-wrapper:hover:after {
+  background-color: #fff;
+}
+
+.header__menu-item--datepicker {
+  display: inline-block;
+  height: 50px;
+  line-height: 50px;
+  font-size: 14px;
+  text-align: right;
+  color: #999;
+  border:none;
+  padding: 0 20px 0 0;
+  background-image:none;
+  background-color:transparent;
+  box-shadow: none;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.header__menu-item--selected .header__menu-item--datepicker {
+  color: #fff;
+}
 
 .flatpickr-calendar {
   font-family: 'Work Sans', sans-serif;

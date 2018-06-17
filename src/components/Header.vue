@@ -68,6 +68,7 @@ export default {
 }
 
 .header__menu-item {
+  position: relative;
   display: inline-block;
   margin: 0 15px;
   height: inherit;
@@ -83,23 +84,6 @@ export default {
 .header__menu-item--datepicker:hover,
 .header__menu-item--selected {
   color: #fff;
-}
-
-.header__menu-item--datepicker {
-  display: inline-block;
-  width:130px;
-  height: 50px;
-  line-height: 50px;
-  font-size: 14px;
-  text-align: right;
-  color: #999;
-  border:none;
-  padding: 0;
-  background-image:none;
-  background-color:transparent;
-  box-shadow: none;
-  box-sizing: border-box;
-  cursor: pointer;
 }
 
 .header__menu-item--dropdown {
