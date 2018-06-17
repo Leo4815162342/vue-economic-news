@@ -10,7 +10,7 @@
           <div class="header__menu-item header__menu-item--dropdown">
             <flat-pickr
               v-model="date"
-              :config="flatPickrConfig"
+              :config="datePickerConfig"
               @on-change="onDateSelect"
             >
             </flat-pickr>
@@ -22,7 +22,7 @@
                 class="header__lang-item"
                 v-bind:key="code"
                 v-for="(lang, code) in langs"
-                @click="setLanguage({lang: code})"
+                @click="onLangSelect(code)"
               >
                 {{lang}}
               </li>
@@ -43,14 +43,22 @@
 // import datepicker from 'vue-date';
 import { mapActions, mapState, mapGetters } from 'vuex';
 import flatPickr from 'vue-flatpickr-component';
+import { Russian } from 'flatpickr/dist/l10n/ru';
+import { Spanish } from 'flatpickr/dist/l10n/es';
+import { Mandarin } from 'flatpickr/dist/l10n/zh';
+import { Portuguese } from 'flatpickr/dist/l10n/pt';
+import { Japanese } from 'flatpickr/dist/l10n/ja';
+import { German } from 'flatpickr/dist/l10n/de';
 import './datepicker.css';
 
-const flatPickrConfig = {
-  mode: 'range',
-  altInput: true,
-  altFormat: 'M j',
-  altInputClass: 'header__menu-item--datepicker',
-  static: true
+const calendarLangMap = {
+  ru: Russian,
+  en: null,
+  es: Spanish,
+  zh: Mandarin,
+  pt: Portuguese,
+  ja: Japanese,
+  de: German
 }
 
 export default {
@@ -60,23 +68,58 @@ export default {
   },
   data() {
     return {
-      date: ['2018-05-07', '2018-05-11'],
-      flatPickrConfig
+      date: null,
+      datePickerConfig: {
+        mode: 'range',
+        altInput: true,
+        altFormat: 'M j',
+        altInputClass: 'header__menu-item--datepicker',
+        static: true,
+        locale: null
+      }
+      
     }
   },
-  computed: mapState({
-    langs: state => state.langs,
-    currentLang: state => state.currentLang,
-    isFetching: state => state.isFetching
-  }),
+  computed: {
+    ...mapState([
+      'langs',
+      'currentLang',
+      'isFetching',
+      'dateFrom',
+      'dateTo'
+    ])
+  },
   methods: {
-    onDateSelect(data) {
-      console.log('Date selected', data);
+    ...mapActions(['setLanguage', 'setFromDate', 'setToDate']),
+    onDateSelect(newDates) {
+      const [fromDate, toDate] = newDates.map(date => {
+
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [year, month, day].join('-');
+
+      });
+
+        this.setFromDate({date: fromDate});
+        this.setToDate({date: toDate});
+
     },
-    ...mapActions(['setLanguage'])
+    onLangSelect(lang) {
+      this.setLanguage({lang});
+      this.datePickerConfig.locale = calendarLangMap[lang];
+      // trigger date selector title to change
+      this.date = [this.dateFrom, this.dateTo];
+
+    }
   },
   created() {
-    // console.log(Datepicker);
+    this.date = [this.dateFrom, this.dateTo];
   }
 }
 </script>

@@ -1,3 +1,98 @@
+<template>
+  <div class="header__menu-item header__menu-item--dropdown">
+    <flat-pickr
+      v-model="date"
+      :config="datePickerConfig"
+      @on-change="onDateSelect"
+    >
+    </flat-pickr>
+  </div>
+</template>
+
+<script>
+
+import { mapActions, mapState } from 'vuex';
+import flatPickr from 'vue-flatpickr-component';
+import { Russian } from 'flatpickr/dist/l10n/ru';
+import { Spanish } from 'flatpickr/dist/l10n/es';
+import { Mandarin } from 'flatpickr/dist/l10n/zh';
+import { Portuguese } from 'flatpickr/dist/l10n/pt';
+import { Japanese } from 'flatpickr/dist/l10n/ja';
+import { German } from 'flatpickr/dist/l10n/de';
+import './datepicker.css';
+
+const calendarLangMap = {
+  ru: Russian,
+  en: null,
+  es: Spanish,
+  zh: Mandarin,
+  pt: Portuguese,
+  ja: Japanese,
+  de: German
+};
+
+export default {
+  name: 'Datepicker',
+  components: {
+    flatPickr
+  },
+  data() {
+    return {
+      date: null,
+      datePickerConfig: {
+        mode: 'range',
+        altInput: true,
+        altFormat: 'M j',
+        altInputClass: 'header__menu-item--datepicker',
+        static: true,
+        locale: null
+      }
+    }
+  },
+  computed: {
+    ...mapState([
+      'currentLang',
+      'dateFrom',
+      'dateTo'
+    ])
+  },
+  watch: {
+    currentLang: function(lang) {
+      this.datePickerConfig.locale = calendarLangMap[lang];
+      // trigger date selector title to change
+      this.date = [this.dateFrom, this.dateTo];
+    }
+  },
+  methods: {
+    ...mapActions(['setLanguage', 'setFromDate', 'setToDate']),
+    onDateSelect(newDates) {
+      const [fromDate, toDate] = newDates.map(date => {
+
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [year, month, day].join('-');
+
+      });
+
+        this.setFromDate({date: fromDate});
+        this.setToDate({date: toDate});
+
+    }
+  },
+  created() {
+    this.date = [this.dateFrom, this.dateTo];
+  }
+}
+</script>
+
+<style>
+
 .flatpickr-calendar {
   font-family: 'Work Sans', sans-serif;
   background: transparent;
@@ -550,3 +645,6 @@ span.flatpickr-weekday {
   -webkit-box-shadow: -5px 0 0 #868686, 5px 0 0 #868686;
           box-shadow: -5px 0 0 #868686, 5px 0 0 #868686;
 }
+
+
+</style>

@@ -42,6 +42,12 @@ const store = new Vuex.Store({
     },
     setLanguage(state, { lang }) {
       state.currentLang = lang;
+    },
+    setFromDate(state, { date }) {
+      state.dateFrom = date;
+    },
+    setToDate(state, { date }) {
+      state.dateTo = date;
     }
   },
   actions: {
@@ -85,11 +91,20 @@ const store = new Vuex.Store({
     setLanguage(context, { lang }) {
       context.commit('setLanguage', { lang });
       context.dispatch('fetchNews');
+    },
+    setFromDate(context, { date }) {
+      context.commit('setFromDate', { date });
+    },
+    setToDate(context, { date }) {
+      context.commit('setToDate', { date });
     }
   },
   getters: {
     // allLangs: state => {
     //   return Object.keys(state.langs).map(code => ({ code, name: state.langs[code]}))
+    // }
+    // datesRange: state => {
+    //   return [state.dateFrom, state.dateTo]
     // }
   }
 });
