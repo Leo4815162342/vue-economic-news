@@ -1,5 +1,5 @@
 <template>
-  <div class="header__menu-item header__menu-item--dropdown">
+  <div class="header__menu-item">
     <flat-pickr
       v-model="date"
       :config="datePickerConfig"

@@ -8,19 +8,7 @@
        
         <div class="header__menu">
           <Datepicker />
-          <div class="header__menu-item header__menu-item--dropdown sub">
-            <span>{{langs[currentLang]}}</span>
-            <ul class="header__lang-list sub__menu">
-              <li
-                class="header__lang-item"
-                v-bind:key="code"
-                v-for="(lang, code) in langs"
-                @click="onLangSelect(code)"
-              >
-                {{lang}}
-              </li>
-            </ul>  
-          </div>
+          <Languages />
           <div class="header__menu-item">
             <span>Update</span>
           </div>
@@ -33,39 +21,13 @@
 <script>
 
 import Datepicker from './Datepicker.vue';
-
-import { mapActions, mapState, mapGetters } from 'vuex';
+import Languages from './Languages.vue';
 
 export default {
   name: 'Header',
   components: {
-    Datepicker
-  },
-  data() {
-    return {
-      date: null,
-      datePickerConfig: {
-        mode: 'range',
-        altInput: true,
-        altFormat: 'M j',
-        altInputClass: 'header__menu-item--datepicker',
-        static: true,
-        locale: null
-      }
-      
-    }
-  },
-  computed: {
-    ...mapState([
-      'langs',
-      'currentLang'
-    ])
-  },
-  methods: {
-    ...mapActions(['setLanguage']),
-    onLangSelect(lang) {
-      this.setLanguage({lang});
-    }
+    Datepicker,
+    Languages
   }
 }
 </script>
