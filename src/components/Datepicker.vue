@@ -19,7 +19,6 @@ import { Mandarin } from 'flatpickr/dist/l10n/zh';
 import { Portuguese } from 'flatpickr/dist/l10n/pt';
 import { Japanese } from 'flatpickr/dist/l10n/ja';
 import { German } from 'flatpickr/dist/l10n/de';
-import './datepicker.css';
 
 const calendarLangMap = {
   ru: Russian,

@@ -7,14 +7,7 @@
         </div>
        
         <div class="header__menu">
-          <div class="header__menu-item header__menu-item--dropdown">
-            <flat-pickr
-              v-model="date"
-              :config="datePickerConfig"
-              @on-change="onDateSelect"
-            >
-            </flat-pickr>
-          </div>
+          <Datepicker />
           <div class="header__menu-item header__menu-item--dropdown sub">
             <span>{{langs[currentLang]}}</span>
             <ul class="header__lang-list sub__menu">
@@ -39,32 +32,14 @@
 
 <script>
 
-// import Datepicker from 'vuejs-datepicker';
-// import datepicker from 'vue-date';
-import { mapActions, mapState, mapGetters } from 'vuex';
-import flatPickr from 'vue-flatpickr-component';
-import { Russian } from 'flatpickr/dist/l10n/ru';
-import { Spanish } from 'flatpickr/dist/l10n/es';
-import { Mandarin } from 'flatpickr/dist/l10n/zh';
-import { Portuguese } from 'flatpickr/dist/l10n/pt';
-import { Japanese } from 'flatpickr/dist/l10n/ja';
-import { German } from 'flatpickr/dist/l10n/de';
-import './datepicker.css';
+import Datepicker from './Datepicker.vue';
 
-const calendarLangMap = {
-  ru: Russian,
-  en: null,
-  es: Spanish,
-  zh: Mandarin,
-  pt: Portuguese,
-  ja: Japanese,
-  de: German
-}
+import { mapActions, mapState, mapGetters } from 'vuex';
 
 export default {
   name: 'Header',
   components: {
-    flatPickr
+    Datepicker
   },
   data() {
     return {
@@ -83,43 +58,14 @@ export default {
   computed: {
     ...mapState([
       'langs',
-      'currentLang',
-      'isFetching',
-      'dateFrom',
-      'dateTo'
+      'currentLang'
     ])
   },
   methods: {
-    ...mapActions(['setLanguage', 'setFromDate', 'setToDate']),
-    onDateSelect(newDates) {
-      const [fromDate, toDate] = newDates.map(date => {
-
-        var d = new Date(date),
-            month = '' + (d.getMonth() + 1),
-            day = '' + d.getDate(),
-            year = d.getFullYear();
-
-        if (month.length < 2) month = '0' + month;
-        if (day.length < 2) day = '0' + day;
-
-        return [year, month, day].join('-');
-
-      });
-
-        this.setFromDate({date: fromDate});
-        this.setToDate({date: toDate});
-
-    },
+    ...mapActions(['setLanguage']),
     onLangSelect(lang) {
       this.setLanguage({lang});
-      this.datePickerConfig.locale = calendarLangMap[lang];
-      // trigger date selector title to change
-      this.date = [this.dateFrom, this.dateTo];
-
     }
-  },
-  created() {
-    this.date = [this.dateFrom, this.dateTo];
   }
 }
 </script>
