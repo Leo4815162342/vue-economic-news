@@ -88,7 +88,7 @@ export default {
 
 .header__menu-item--dropdown {
   position: relative;
-  padding-right: 6px;
+  padding-right: 12px;
 }
 
 .header__menu-item--dropdown:after {
@@ -96,7 +96,7 @@ export default {
   content: '';
   top: 50%;
   margin-top: -1px;
-  right: -6px;
+  right: 0px;
   width: 0;
   height: 0;
   border-style: solid;
