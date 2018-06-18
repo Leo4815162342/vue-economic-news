@@ -70,7 +70,7 @@ export default {
 .header__menu-item {
   position: relative;
   display: inline-block;
-  margin: 0 15px;
+  margin: 0 10px;
   height: inherit;
   line-height: 50px;
   cursor: pointer;

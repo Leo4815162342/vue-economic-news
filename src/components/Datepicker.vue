@@ -9,7 +9,6 @@
       @on-close="onDatepickerClose"
     >
     </flat-pickr>
-    <!-- <img class="header__menu-icon" src="./../assets/calendar.svg" width="16" height="16"> -->
   </div>
 </template>
 
@@ -23,6 +22,7 @@ import { Mandarin } from 'flatpickr/dist/l10n/zh';
 import { Portuguese } from 'flatpickr/dist/l10n/pt';
 import { Japanese } from 'flatpickr/dist/l10n/ja';
 import { German } from 'flatpickr/dist/l10n/de';
+import { DateTime} from 'luxon';
 
 const calendarLangMap = {
   ru: Russian,
@@ -70,22 +70,11 @@ export default {
   methods: {
     ...mapActions(['setLanguage', 'setFromDate', 'setToDate']),
     onDateSelect(newDates) {
-      const [fromDate, toDate] = newDates.map(date => {
 
-        var d = new Date(date),
-            month = '' + (d.getMonth() + 1),
-            day = '' + d.getDate(),
-            year = d.getFullYear();
+      const [fromDate, toDate] = newDates.map(d => DateTime.fromJSDate(d).toISODate());
 
-        if (month.length < 2) month = '0' + month;
-        if (day.length < 2) day = '0' + day;
-
-        return [year, month, day].join('-');
-
-      });
-
-        this.setFromDate({date: fromDate});
-        this.setToDate({date: toDate});
+      this.setFromDate({date: fromDate});
+      this.setToDate({date: toDate});
 
     },
     onDatepickerOpen() {
