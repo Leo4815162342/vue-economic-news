@@ -6,7 +6,7 @@
         class="header__lang-item"
         v-bind:key="code"
         v-for="(lang, code) in langs"
-        @click="onLangSelect(code)"
+        @click="setLanguage({lang: code})"
       >
         {{lang}}
       </li>
@@ -28,10 +28,9 @@ export default {
     ])
   },
   methods: {
-    ...mapActions(['setLanguage']),
-    onLangSelect(lang) {
-      this.setLanguage({lang});
-    }
+    ...mapActions([
+      'setLanguage'
+    ])
   }
 }
 </script>

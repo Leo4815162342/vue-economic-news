@@ -1,16 +1,17 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+
 import proxiedFetch from 'proxied-fetch';
 
+import { DateTime } from 'luxon';
+
+const today = DateTime.fromJSDate(new Date);
+const todayIso = today.toISODate();
+const lastWeekIso = today.minus({days: 7}).toISODate();
+
+console.log(todayIso, lastWeekIso);
+
 Vue.use(Vuex);
-
-function buildEndPointUrl({lang, dateFrom, dateTo}) {
-  
-  const url = `https://www.mql5.com/${lang}/economic-calendar/widget/content?date_mode=2&from=${dateFrom}T00:00:00&to=${dateTo}T23:59:59`;
-  
-  return encodeURI(url);
-
-}
 
 const store = new Vuex.Store({
   state: {
@@ -25,8 +26,8 @@ const store = new Vuex.Store({
     },
     currentLang: 'en',
     newsList: [],
-    dateFrom: '2017-04-20',
-    dateTo: '2017-04-23',
+    dateFrom: lastWeekIso,
+    dateTo: todayIso,
     isFetching: true,
     errors: null
   },
@@ -59,9 +60,10 @@ const store = new Vuex.Store({
         
         const { currentLang: lang , dateFrom, dateTo } = context.state;
 
-        const url = buildEndPointUrl({ lang, dateFrom, dateTo });
+        const url = `https://www.mql5.com/${lang}/economic-calendar/widget/content?date_mode=2&from=${dateFrom}T00:00:00&to=${dateTo}T23:59:59`;
 
-        const res = await proxiedFetch(url);
+        const res = await proxiedFetch(encodeURI(url));
+
         const textData = await res.text();
         const newsList = JSON.parse(textData.replace(/<!--[\s\S]*?-->/g, ""));
         
@@ -97,6 +99,7 @@ const store = new Vuex.Store({
     },
     setToDate(context, { date }) {
       context.commit('setToDate', { date });
+      context.dispatch('fetchNews');
     }
   },
   getters: {

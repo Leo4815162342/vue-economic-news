@@ -19,6 +19,7 @@
 
 import { mapActions, mapState, mapGetters } from 'vuex';
 import Header from './components/Header.vue';
+import { DateTime } from 'luxon';
 
 
 export default {
@@ -36,18 +37,6 @@ export default {
   created: function() {
 
     this.fetchNews();
-
-    setTimeout(_ => {
-    
-      this.setLanguage({lang: 'ru'});
-
-    }, 2000);
-
-    setTimeout(_ => {
-    
-      this.setLanguage({lang: 'de'});
-
-    }, 4000);
 
   }
 }
