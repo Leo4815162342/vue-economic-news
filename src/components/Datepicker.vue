@@ -64,17 +64,26 @@ export default {
     currentLang: function(lang) {
       this.datePickerConfig.locale = calendarLangMap[lang];
       // trigger date selector title to change
-      this.date = [this.dateFrom, this.dateTo];
+      this.resetDates();
     }
   },
   methods: {
-    ...mapActions(['setLanguage', 'setFromDate', 'setToDate']),
+    ...mapActions([
+      'setLanguage',
+      'setFromDate',
+      'setToDate'
+    ]),
     onDateSelect(newDates) {
 
       const [fromDate, toDate] = newDates.map(d => DateTime.fromJSDate(d).toISODate());
+      
+      if (fromDate) {
+        this.setFromDate({date: fromDate});
+      }
 
-      this.setFromDate({date: fromDate});
-      this.setToDate({date: toDate});
+      if (toDate) {
+        this.setToDate({date: toDate});
+      }
 
     },
     onDatepickerOpen() {
@@ -82,10 +91,14 @@ export default {
     },
     onDatepickerClose() {
       this.isCalOpen = false;
-    }
+      this.resetDates();
+    },
+    resetDates() {
+      this.date = [this.dateFrom, this.dateTo];
+    },
   },
   created() {
-    this.date = [this.dateFrom, this.dateTo];
+    this.resetDates();
   }
 }
 </script>

@@ -9,8 +9,6 @@ const today = DateTime.fromJSDate(new Date);
 const todayIso = today.toISODate();
 const lastWeekIso = today.minus({days: 7}).toISODate();
 
-console.log(todayIso, lastWeekIso);
-
 Vue.use(Vuex);
 
 const store = new Vuex.Store({

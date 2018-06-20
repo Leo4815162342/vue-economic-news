@@ -1,8 +1,8 @@
 <template>
-    <div class="header">
+    <div class="header" :class="{ 'header--loading': isFetching }">
       <div class="header__inner">
         <div class="header__logo">
-          <img src="./../assets/globe.svg" width="24" height="24">
+          <img src="./../assets/flamingo.svg" width="24" height="24">
           <h1>Economic News</h1>
         </div>
        
@@ -23,19 +23,49 @@
 import Datepicker from './Datepicker.vue';
 import Languages from './Languages.vue';
 
+import { mapState } from 'vuex';
+
 export default {
   name: 'Header',
   components: {
     Datepicker,
     Languages
-  }
+  },
+    computed: {
+    ...mapState([
+      'isFetching',
+    ])
+  },
 }
 </script>
 
 <style>
+
 .header {
+  position: relative;
   height: 50px;
   background-color: #2f2f2ffa;
+  border-bottom: 3px solid #ea4c89;
+}
+
+.header:after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  will-change: transform;
+  background-color: #fff;
+  transform: scaleX(0);
+  transform-origin: 0% 0%;
+}
+
+.header--loading:after {
+  animation-duration: 1.5s;
+  animation-name: loader-animations;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-out;
 }
 
 .header__inner {
@@ -55,7 +85,6 @@ export default {
 .header__logo h1 {
   margin: 0;
   font-size: 20px;
-  font-weight: 800;
   font-weight: 400;
   color: #fff;
   margin-left: 5px;
@@ -144,17 +173,16 @@ export default {
   text-align: left;
 }
 
-@-webkit-keyframes rotating {
-    from{
-        -webkit-transform: rotate(0deg);
+@keyframes loader-animations {
+    0% {
+        transform: scaleX(0);
     }
-    to{
-        -webkit-transform: rotate(360deg);
+    50% {
+        transform: scaleX(1);
     }
-}
-
-.rotating {
-    -webkit-animation: rotating 0.6s linear infinite;
+    100% {
+        transform: scaleX(0);
+    }
 }
 
 </style>
