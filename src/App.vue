@@ -48,11 +48,16 @@ html {
   overflow-y: scroll;
 }
 
+
+
 body {
   margin: 0;
   padding: 0;
   background: #dfdfdf;
+  overflow-x: hidden;
 }
+
+
 
 ul, li {
   margin: 0;
