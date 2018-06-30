@@ -6,7 +6,7 @@
         class="header__lang-item"
         v-bind:key="code"
         v-for="(lang, code) in langs"
-        @click="setLanguage({lang: code})"
+        @click="onLangClick(code)"
       >
         {{lang}}
       </li>
@@ -29,8 +29,18 @@ export default {
   },
   methods: {
     ...mapActions([
-      'setLanguage'
-    ])
+      'setLanguage',
+      'fetchNews'
+    ]),
+    onLangClick(code) {
+      
+      if (code === this.currentLang) {
+        return;
+      }
+console.log('CHANGING LANG');
+      this.setLanguage({lang: code});
+      this.fetchNews();
+    }
   }
 }
 </script>

@@ -69,20 +69,28 @@ export default {
   },
   methods: {
     ...mapActions([
-      'setLanguage',
       'setFromDate',
-      'setToDate'
+      'setToDate',
+      'fetchNews'
     ]),
     onDateSelect(newDates) {
 
       const [fromDate, toDate] = newDates.map(d => DateTime.fromJSDate(d).toISODate());
       
+      if (fromDate === this.dateFrom && toDate === this.dateTo) {
+        return;
+      }
+
       if (fromDate) {
         this.setFromDate({date: fromDate});
       }
 
       if (toDate) {
         this.setToDate({date: toDate});
+      }
+
+      if (fromDate && toDate) {
+        this.fetchNews();
       }
 
     },
