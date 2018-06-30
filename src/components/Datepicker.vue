@@ -77,7 +77,13 @@ export default {
 
       const [fromDate, toDate] = newDates.map(d => DateTime.fromJSDate(d).toISODate());
       
+      if (!fromDate || !toDate) {
+        return;
+      }
+
+
       if (fromDate === this.dateFrom && toDate === this.dateTo) {
+        console.log('Same dates selected');
         return;
       }
 

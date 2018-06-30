@@ -9,6 +9,33 @@ const today = DateTime.fromJSDate(new Date);
 const todayIso = today.toISODate();
 const lastWeekIso = today.minus({days: 7}).toISODate();
 
+function normalizeNews(textData, lang) {
+
+  const res = JSON.parse(textData.replace(/<!--[\s\S]*?-->/g, "")).reduce((all, item) => {
+    const { ReleaseDate } = item;
+    
+    const dt = DateTime.fromMillis(ReleaseDate);
+
+    const endOfDay = dt.endOf('day').toMillis();
+    const dayName = dt.setLocale(lang).toLocaleString(Object.assign({ weekday: 'long' }, DateTime.DATE_MED));
+    const formattedTime = dt.toLocaleString(DateTime.TIME_24_SIMPLE);
+
+    if (!all.hasOwnProperty(endOfDay)) {
+      all[endOfDay] = {
+        dayName,
+        list: []
+      };
+    }
+    
+    all[endOfDay].list.push(Object.assign({}, item, {formattedTime}));
+
+    return all;
+
+  }, {});
+
+  return res;
+}
+
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -51,7 +78,7 @@ const store = new Vuex.Store({
   },
   actions: {
     async fetchNews(context) {
-      
+      console.log('FETCHING NEWWS');
       try {
 
         context.commit('toggleNewsLoadingIndication', { flag: true });
@@ -63,9 +90,12 @@ const store = new Vuex.Store({
         const res = await proxiedFetch(encodeURI(url));
 
         const textData = await res.text();
-        const newsList = JSON.parse(textData.replace(/<!--[\s\S]*?-->/g, ""));
-        
-        if (Array.isArray(newsList) && newsList.length) {
+
+        const newsList = normalizeNews(textData, lang);
+
+        console.log(newsList);
+
+        if (typeof newsList === 'object' && Object.keys(newsList).length) {
 
           context.commit('updateNewsList', { newsList });
 
@@ -90,14 +120,12 @@ const store = new Vuex.Store({
     },
     setLanguage(context, { lang }) {
       context.commit('setLanguage', { lang });
-      context.dispatch('fetchNews');
     },
     setFromDate(context, { date }) {
       context.commit('setFromDate', { date });
     },
     setToDate(context, { date }) {
       context.commit('setToDate', { date });
-      context.dispatch('fetchNews');
     }
   },
   getters: {

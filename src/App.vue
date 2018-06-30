@@ -2,12 +2,15 @@
   <div id="app">
     <Header />
 
-
-    <h1>{{currentLang}}</h1>
-    <div class="list" v-if="news && news.length">
+    <div class="news">
       
-      <div class="list__item" v-for="{ EventName, CurrencyCode, ReleaseDate, Id } in news" :key="Id">
-        <strong>{{EventName}}</strong>, <strong>{{CurrencyCode}}</strong>, <span>{{ReleaseDate}}</span>
+      <div class="news__day" v-for="({ dayName, list }, key) in news" :key="key">
+        <h4 class="news__day-name">{{dayName}}</h4>
+        <ul class="news__items">
+          <li class="" v-for="{ EventName, CurrencyCode, formattedTime, Id } in list" :key="Id">
+            <span>{{CurrencyCode}}</span>, <span>{{EventName}}</span>, <span>{{formattedTime}}</span>
+          </li>
+        </ul>
       </div>
 
     </div>
@@ -19,8 +22,6 @@
 
 import { mapActions, mapState, mapGetters } from 'vuex';
 import Header from './components/Header.vue';
-import { DateTime } from 'luxon';
-
 
 export default {
   name: 'app',
