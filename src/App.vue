@@ -1,40 +1,25 @@
 <template>
   <div id="app">
     <Header />
-
-    <div class="news">
-      
-      <div class="news__day" v-for="({ dayName, list }, key) in news" :key="key">
-        <h4 class="news__day-name">{{dayName}}</h4>
-        <ul class="news__items">
-          <li class="" v-for="{ EventName, CurrencyCode, formattedTime, Id } in list" :key="Id">
-            <span>{{CurrencyCode}}</span>, <span>{{EventName}}</span>, <span>{{formattedTime}}</span>
-          </li>
-        </ul>
-      </div>
-
-    </div>
-
+    <News />
   </div>
 </template>
 
 <script>
 
-import { mapActions, mapState, mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 import Header from './components/Header.vue';
+import News from './components/News.vue';
 
 export default {
   name: 'app',
   components: {
-    Header
+    Header,
+    News
   },
   methods: {
-    ...mapActions(['fetchNews', 'setLanguage'])
+    ...mapActions(['fetchNews'])
   },
-  computed: mapState({
-    news: state => state.newsList,
-    currentLang: state => state.currentLang
-  }),
   created: function() {
 
     this.fetchNews();

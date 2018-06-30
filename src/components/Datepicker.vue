@@ -81,7 +81,6 @@ export default {
         return;
       }
 
-
       if (fromDate === this.dateFrom && toDate === this.dateTo) {
         console.log('Same dates selected');
         return;
@@ -108,6 +107,7 @@ export default {
       this.resetDates();
     },
     resetDates() {
+      console.log('RESET DATES');
       this.date = [this.dateFrom, this.dateTo];
     },
   },
