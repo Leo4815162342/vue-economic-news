@@ -51,7 +51,12 @@ ul, li {
 }
 
 ul {
+  list-style: none;
   list-style-type: none;
+}
+
+h1, h2, h3, h4, h5 {
+  margin: 0;
 }
 
 #app {

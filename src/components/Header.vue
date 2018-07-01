@@ -44,7 +44,7 @@ export default {
 .header {
   position: relative;
   height: 50px;
-  background-color: #2f2f2ffa;
+  background-color: #2f2f2f;
   border-bottom: 3px solid #ea4c89;
 }
 

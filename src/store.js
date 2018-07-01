@@ -6,8 +6,8 @@ import proxiedFetch from 'proxied-fetch';
 import { DateTime } from 'luxon';
 
 const today = DateTime.fromJSDate(new Date);
-const todayIso = today.toISODate();
-const lastWeekIso = today.minus({days: 7}).toISODate();
+const toIsoDate = today.toISODate();
+const fromIsoDate = today.minus({days: 3}).toISODate();
 
 function normalizeNews(textData, lang) {
 
@@ -51,8 +51,8 @@ const store = new Vuex.Store({
     },
     currentLang: 'en',
     newsList: [],
-    dateFrom: lastWeekIso,
-    dateTo: todayIso,
+    dateFrom: fromIsoDate,
+    dateTo: toIsoDate,
     isFetching: true,
     errors: null
   },
