@@ -52,7 +52,7 @@ export default {
   }
   
   .news__day-name {
-    background-color: #999;
+    background-color: #2f2f2f;
     color: #fff;
     padding: 10px;
     font-weight: normal;
@@ -61,7 +61,9 @@ export default {
 
   .news__item {
     display: flex;
+    align-items: center;
     padding: 10px;
+    font-size: 14px;
     border-bottom: 1px solid #ededed;
   }
 
@@ -69,12 +71,37 @@ export default {
     background-color: #f3f3f3;
   }
   
+  .news__item:hover {
+    background-color: #e6e6e6;
+  }
+
+  .news__time {
+    flex: 0 0 60px;
+  }
+
+  .news__currency {
+    flex: 0 0 40px;
+  }
+
+  .news__name {
+    flex: 0 0 500px;
+    padding: 0 10px;
+  }
+  
+  .news__previous,
+  .news__forecast,
+  .news__actual {
+    flex: 1 0 5%;
+    padding: 0 10px;
+    text-align: center;
+  }
+
   .news__actual--1 {
-    color: green;
+    color: #00a000;
   }
   
   .news__actual--2 {
-    color: red;
+    color: #ff5050;
   }
 
 </style>
