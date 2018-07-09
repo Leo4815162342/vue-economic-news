@@ -17,7 +17,7 @@ function normalizeNews(textData, lang) {
     const dt = DateTime.fromMillis(ReleaseDate);
 
     const endOfDay = dt.endOf('day').toMillis();
-    const dayName = dt.setLocale(lang).toLocaleString(Object.assign({ weekday: 'long' }, DateTime.DATE_MED));
+    const dayName = dt.setLocale(lang).toLocaleString(Object.assign({ weekday: 'long' }, DateTime.DATE_HUGE));
     const formattedTime = dt.toLocaleString(DateTime.TIME_24_SIMPLE);
 
     if (!all.hasOwnProperty(endOfDay)) {
