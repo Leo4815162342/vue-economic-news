@@ -6,8 +6,8 @@ import proxiedFetch from 'proxied-fetch';
 import { DateTime } from 'luxon';
 
 const today = DateTime.fromJSDate(new Date);
-const toIsoDate = today.toISODate();
 const fromIsoDate = today.minus({days: 3}).toISODate();
+const toIsoDate = today.plus({days: 3}).toISODate();
 
 function normalizeNews(textData, lang) {
 
