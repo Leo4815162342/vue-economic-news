@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "luxon": "^1.3.0",
-    "proxied-fetch": "^1.0.7",
+    "proxied-fetch": "^1.0.9",
     "vue": "^2.5.16",
     "vue-flatpickr-component": "^7.0.2",
     "vuex": "^3.0.1"
