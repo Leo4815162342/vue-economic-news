@@ -1,33 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import { DateTime } from 'luxon';
-import { getNewsList } from './api.js';
-
-const today = DateTime.fromJSDate(new Date);
-const fromIsoDate = today.minus({days: 3}).toISODate();
-const toIsoDate = today.plus({days: 3}).toISODate();
+import defaultState from './defaultState.js';
+import { getNewsList } from './../api.js';
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-  state: {
-    langs: {
-      ru: 'Русский',
-      en: 'English',
-      es: 'Español',
-      zh: '中文',
-      pt: 'Português',
-      ja: '日本語',
-      de: 'Deutsch'
-    },
-    currentLang: 'en',
-    newsList: [],
-    dateFrom: fromIsoDate,
-    dateTo: toIsoDate,
-    isFetching: true,
-    errors: null
-  },
+  state: defaultState,
   mutations: {
     updateNewsList (state, { newsList }) {
       state.newsList = newsList;
