@@ -1,40 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import proxiedFetch from 'proxied-fetch';
-
 import { DateTime } from 'luxon';
+import { getNewsList } from './api.js';
 
 const today = DateTime.fromJSDate(new Date);
 const fromIsoDate = today.minus({days: 3}).toISODate();
 const toIsoDate = today.plus({days: 3}).toISODate();
-
-function normalizeNews(textData, lang) {
-
-  const res = JSON.parse(textData.replace(/<!--[\s\S]*?-->/g, "")).reduce((all, item) => {
-    const { ReleaseDate } = item;
-    
-    const dt = DateTime.fromMillis(ReleaseDate);
-
-    const endOfDay = dt.endOf('day').toMillis();
-    const dayName = dt.setLocale(lang).toLocaleString(Object.assign({ weekday: 'long' }, DateTime.DATE_HUGE));
-    const formattedTime = dt.toLocaleString(DateTime.TIME_24_SIMPLE);
-
-    if (!all.hasOwnProperty(endOfDay)) {
-      all[endOfDay] = {
-        dayName,
-        list: []
-      };
-    }
-    
-    all[endOfDay].list.push(Object.assign({}, item, {formattedTime}));
-
-    return all;
-
-  }, {});
-
-  return res;
-}
 
 Vue.use(Vuex);
 
@@ -82,16 +54,10 @@ const store = new Vuex.Store({
       try {
 
         context.commit('toggleNewsLoadingIndication', { flag: true });
-        
+
         const { currentLang: lang , dateFrom, dateTo } = context.state;
 
-        const url = `https://www.mql5.com/${lang}/economic-calendar/widget/content?date_mode=2&from=${dateFrom}T00:00:00&to=${dateTo}T23:59:59`;
-
-        const res = await proxiedFetch(encodeURI(url));
-
-        const textData = await res.text();
-
-        const newsList = normalizeNews(textData, lang);
+        const newsList = await getNewsList({dateFrom, dateTo, lang});
 
         console.log(newsList);
 
