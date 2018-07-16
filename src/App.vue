@@ -34,16 +34,12 @@ html {
   overflow-y: scroll;
 }
 
-
-
 body {
   margin: 0;
   padding: 0;
-  background: #dfdfdf;
+  background: #b5b5b5;
   overflow-x: hidden;
 }
-
-
 
 ul, li {
   margin: 0;
