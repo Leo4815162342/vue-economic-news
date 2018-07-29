@@ -1,7 +1,7 @@
 <template>
   <div class="news">
-
-    <div class="news__day" v-for="({ dayName, list }, key) in news" :key="key">
+    <NewsTableHeader />
+    <div class="news__day" v-for="({ dayName, list }, key) in newsList" :key="key">
       <h4 class="news__day-name">{{dayName}}</h4>
       <ul class="news__items">
         <li class="news__item" v-for="{ EventName, CurrencyCode, formattedTime, PreviousValue, ForecastValue, ActualValue, ImpactDirection, Id } in list" :key="Id">
@@ -33,12 +33,16 @@
 <script>
 
 import { mapState } from 'vuex';
+import NewsTableHeader from './NewsTableHeader.vue';
 
 export default {
   name: 'News',
-  computed: mapState({
-    news: state => state.newsList,
-  })
+  components: {
+    NewsTableHeader,
+  },
+  computed: mapState([
+    'newsList'
+  ])
 }
 
 </script>
@@ -48,11 +52,10 @@ export default {
   .news {
     max-width: 960px;
     margin: 25px auto 100px auto;
-    background-color: #fff;
   }
   
   .news__day-name {
-    background-color: #2f2f2f;
+    background-color: #6b6b6b;
     color: #fff;
     padding: 10px;
     font-weight: normal;
@@ -66,6 +69,10 @@ export default {
     font-size: 14px;
     border-bottom: 1px solid #ededed;
   }
+  
+  .news__item:nth-child(odd) {
+    background-color: #fff;
+  }
 
   .news__item:nth-child(even) {
     background-color: #f3f3f3;
@@ -77,10 +84,13 @@ export default {
 
   .news__time {
     flex: 0 0 60px;
+    text-align: center;
   }
 
   .news__currency {
-    flex: 0 0 40px;
+    flex: 0 0 70px;
+    padding: 0 10px;
+    text-align: center;
   }
 
   .news__name {
