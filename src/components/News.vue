@@ -100,7 +100,7 @@ export default {
     height: 10px;
     border-radius: 50%;
     margin-right: 2px;
-    background-color: #333;
+    background-color: #b9b9b9;
   }
 
   .news__importance--low {
@@ -118,6 +118,9 @@ export default {
   .news__name {
     flex: 0 0 500px;
     padding: 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .news__previous,
