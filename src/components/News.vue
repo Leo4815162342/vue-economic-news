@@ -4,7 +4,7 @@
     <div class="news__day" v-for="({ dayName, list }, key) in newsList" :key="key">
       <h4 class="news__day-name">{{dayName}}</h4>
       <ul class="news__items">
-        <li class="news__item" v-for="{ EventName, CurrencyCode, formattedTime, PreviousValue, ForecastValue, ActualValue, ImpactDirection, Id } in list" :key="Id">
+        <li class="news__item" v-for="{ Importance, EventName, CurrencyCode, formattedTime, PreviousValue, ForecastValue, ActualValue, ImpactDirection, Id } in list" :key="Id">
           <div class="news__time">
             {{formattedTime}}
           </div>
@@ -12,7 +12,8 @@
             {{CurrencyCode}}
           </div>
           <div class="news__name">
-            {{EventName}}
+            <span class="news__importance" :class="`news__importance--${Importance}`"></span>
+            <span>{{EventName}}</span>
           </div>
           <div class="news__previous">
             {{PreviousValue}}
@@ -92,12 +93,33 @@ export default {
     padding: 0 10px;
     text-align: center;
   }
+  
+  .news__importance {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 2px;
+    background-color: #333;
+  }
+
+  .news__importance--low {
+    background-color: #00c700;
+  }
+
+  .news__importance--medium {
+    background-color: #ffa500;
+  }
+
+  .news__importance--high {
+    background-color: #ff5050;
+  }
 
   .news__name {
     flex: 0 0 500px;
     padding: 0 10px;
   }
-  
+
   .news__previous,
   .news__forecast,
   .news__actual {
@@ -109,7 +131,7 @@ export default {
   .news__actual--1 {
     color: #00a000;
   }
-  
+
   .news__actual--2 {
     color: #ff5050;
   }
