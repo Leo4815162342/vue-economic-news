@@ -17,7 +17,7 @@
 
 <script>
 
-import Datepicker from './Datepicker.vue';
+// import Datepicker from './Datepicker.vue';
 import Languages from './Languages.vue';
 
 import { mapState } from 'vuex';
@@ -25,7 +25,8 @@ import { mapState } from 'vuex';
 export default {
   name: 'Header',
   components: {
-    Datepicker,
+    Datepicker: () => import('./Datepicker.vue'),
+    // Datepicker,
     Languages
   },
     computed: {
