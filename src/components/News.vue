@@ -52,6 +52,7 @@ export default {
   .news {
     max-width: 960px;
     margin: 25px auto 100px auto;
+    font-size: 14px;
   }
   
   .news__day-name {
@@ -66,7 +67,6 @@ export default {
     display: flex;
     align-items: center;
     padding: 10px;
-    font-size: 14px;
     border-bottom: 1px solid #ededed;
   }
   

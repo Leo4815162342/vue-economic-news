@@ -9,9 +9,6 @@
         <div class="header__menu">
           <Datepicker />
           <Languages />
-          <div class="header__menu-item">
-            <span>Update</span>
-          </div>
         </div>
         
       </div>
