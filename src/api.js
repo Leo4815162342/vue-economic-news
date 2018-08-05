@@ -42,6 +42,10 @@ function getNormalizeNewsList({textData, lang, dateFrom, dateTo}) {
 
 function getNormalizedHostoricData(textData) {
   
+  if (!textData) {
+    return null;
+  }
+
   const result =
     textData
       .trim()
