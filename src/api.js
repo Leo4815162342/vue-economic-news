@@ -1,14 +1,26 @@
 import proxiedFetch from 'proxied-fetch';
 import { DateTime } from 'luxon';
 
-function normalizeNewsList(textData, lang) {
+function getNormalizeNewsList({textData, lang, dateFrom, dateTo}) {
+
+  const [
+    fromEndOfDayMs,
+    toEndOfDayMs
+  ] = [dateFrom, dateTo].map(a => DateTime.fromISO(a).endOf('day').toMillis());
 
   const res = JSON.parse(textData.replace(/<!--[\s\S]*?-->/g, "")).reduce((all, item) => {
     const { ReleaseDate } = item;
-    
+
     const dt = DateTime.fromMillis(ReleaseDate);
 
     const endOfDay = dt.endOf('day').toMillis();
+
+    const isInRange = endOfDay >= fromEndOfDayMs && endOfDay <= toEndOfDayMs;
+
+    if (!isInRange) {
+      return all;
+    }
+
     const dayName = dt.setLocale(lang).toLocaleString(Object.assign({ weekday: 'long' }, DateTime.DATE_HUGE));
     const formattedTime = dt.toLocaleString(DateTime.TIME_24_SIMPLE);
 
@@ -35,7 +47,7 @@ async function getNewsList({dateFrom, dateTo, lang}) {
 
     const textData = await res.text();
 
-    const newsList = normalizeNewsList(textData, lang);
+    const newsList = getNormalizeNewsList({ textData, lang, dateFrom, dateTo });
 
     return newsList;
 }
