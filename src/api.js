@@ -40,6 +40,41 @@ function getNormalizeNewsList({textData, lang, dateFrom, dateTo}) {
   return res;
 }
 
+function getNormalizedHostoricData(textData) {
+  
+  const result =
+    textData
+      .trim()
+      .split('\n')
+      .slice(1)
+      .reduce((all, item) => {
+
+        const [
+          dateStr, //'2012.07.25'
+          actualVal,
+          _,
+          forecastVal
+        ] = item.split('\t').map(a => Number(a) || a);
+
+        if (!dateStr) {
+          return all;
+        }
+
+        all.push({
+          date: DateTime.fromFormat(dateStr, 'yyyy.LL.dd').toMillis(),
+          actualVal: actualVal || null,
+          forecastVal: forecastVal || null
+        })
+        
+        return all;
+
+      }, [])
+      .sort((a,b) => a.date - b.date);
+    
+  return result;
+
+}
+
 async function getNewsList({dateFrom, dateTo, lang}) {
     const url = `https://www.mql5.com/${lang}/economic-calendar/widget/content?date_mode=2&from=${dateFrom}T00:00:00&to=${dateTo}T23:59:59`;
 
@@ -52,11 +87,27 @@ async function getNewsList({dateFrom, dateTo, lang}) {
     return newsList;
 }
 
-async function getNewsItem() {
-    console.log('getting news list item');
+async function getHistoricData(newItemUrl) {
+
+  // /en/economic-calendar/widget/japan/foreign-investment-in-japan-stocks
+  // /en/economic-calendar/japan/foreign-investment-in-japan-stocks/export
+
+  const exportUrl = `https://www.mql5.com${newItemUrl.replace('/widget/','/')}/export`;
+
+  const res = await proxiedFetch(encodeURI(exportUrl));
+
+  const textData = await res.text();
+
+  const historicData = getNormalizedHostoricData(textData);
+
+  console.log(historicData);
+
+  return historicData;
+
+
 }
 
 export {
     getNewsList,
-    getNewsItem
+    getHistoricData
 }
