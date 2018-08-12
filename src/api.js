@@ -41,7 +41,7 @@ function getNormalizeNewsList({textData, lang, dateFrom, dateTo}) {
 }
 
 function getNormalizedHostoricData(textData) {
-  
+
   if (!textData) {
     return null;
   }
@@ -58,23 +58,22 @@ function getNormalizedHostoricData(textData) {
           actualVal,
           _,
           forecastVal
-        ] = item.split('\t').map(a => Number(a) || a);
+        ] = item.split('\t').map(a => !isNaN(a) ? Number(a) : a || null);
 
         if (!dateStr) {
           return all;
         }
 
         all.push({
-          date: DateTime.fromFormat(dateStr, 'yyyy.LL.dd').toMillis(),
-          actualVal: actualVal || null,
-          forecastVal: forecastVal || null
+          dateTs: DateTime.fromFormat(dateStr, 'yyyy.LL.dd').toMillis(),
+          actualVal,
+          forecastVal,
         })
         
         return all;
 
-      }, [])
-      .sort((a,b) => a.date - b.date);
-    
+      }, []);
+
   return result;
 
 }
@@ -103,8 +102,6 @@ async function getHistoricData(newItemUrl) {
   const textData = await res.text();
 
   const historicData = getNormalizedHostoricData(textData);
-
-  console.log(historicData);
 
   return historicData;
 

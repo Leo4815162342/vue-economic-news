@@ -17,7 +17,6 @@
 
 <script>
 
-// import Datepicker from './Datepicker.vue';
 import Languages from './Languages.vue';
 
 import { mapState } from 'vuex';

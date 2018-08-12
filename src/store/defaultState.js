@@ -16,6 +16,7 @@ const defaultState = {
   },
   currentLang: 'en',
   newsList: [],
+  historicData: {},
   dateFrom: fromIsoDate,
   dateTo: toIsoDate,
   isFetching: true,

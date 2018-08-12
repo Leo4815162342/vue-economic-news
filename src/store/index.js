@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import defaultState from './defaultState.js';
-import { getNewsList } from './../api.js';
+import { getNewsList, getHistoricData } from './../api.js';
 
 Vue.use(Vuex);
 
@@ -11,6 +11,12 @@ const store = new Vuex.Store({
   mutations: {
     updateNewsList (state, { newsList }) {
       state.newsList = newsList;
+    },
+    initHistoricData(state, { newsItemId }) {
+      Vue.set(state.historicData, newsItemId, []);
+    },
+    updateHistoricData(state, { newsItemId, historicDataArr }) {
+      state.historicData[newsItemId] = historicDataArr;
     },
     toggleNewsLoadingIndication(state, { flag }) {
       state.isFetching = flag;
@@ -60,6 +66,30 @@ const store = new Vuex.Store({
       } finally {
 
         context.commit('toggleNewsLoadingIndication', { flag: false });
+
+      }
+
+    },
+    async fetchHistoricData(context, { newsItemId, newsItemUrl }) {
+      
+      console.log('Fetching historic data for', newsItemId);
+      
+      context.commit('initHistoricData', { newsItemId });
+
+      try {
+        
+        const historicDataArr = await getHistoricData(newsItemUrl);
+        
+        if (Array.isArray(historicDataArr) && historicDataArr.length) {
+
+          context.commit('updateHistoricData', { newsItemId, historicDataArr });
+        }
+
+      } catch(err) {
+
+        context.commit('setError', { errorObj: err });
+
+      } finally {
 
       }
 

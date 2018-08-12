@@ -1,28 +1,41 @@
 <template>
+  
   <div class="news">
     <NewsTableHeader />
     <div class="news__day" v-for="({ dayName, list }, key) in newsList" :key="key">
       <h4 class="news__day-name">{{dayName}}</h4>
       <ul class="news__items">
-        <li class="news__item" v-for="{ Importance, EventName, CurrencyCode, formattedTime, PreviousValue, ForecastValue, ActualValue, ImpactDirection, Id } in list" :key="Id">
-          <div class="news__time">
-            {{formattedTime}}
+        <li class="news__item" v-for="{ Importance, EventName, CurrencyCode, formattedTime, PreviousValue, ForecastValue, ActualValue, ImpactDirection, Id, Url } in list" :key="Id" @click="fetchHistoricData({newsItemId: Id, newsItemUrl: Url})">
+          <div class="news__wrap">
+            <div class="news__time">
+              {{formattedTime}}
+            </div>
+            <div class="news__currency">
+              {{CurrencyCode}}
+            </div>
+            <div class="news__name">
+              <span class="news__importance" :class="`news__importance--${Importance}`"></span>
+              <span class="news__name-text">{{EventName}}</span>
+            </div>
+            <div class="news__previous">
+              {{PreviousValue}}
+            </div>
+            <div class="news__forecast">
+              {{ForecastValue}}
+            </div>
+            <div class="news__actual" :class="`news__actual--${ImpactDirection}`">
+              <strong>{{ActualValue}}</strong>
+            </div>
           </div>
-          <div class="news__currency">
-            {{CurrencyCode}}
-          </div>
-          <div class="news__name">
-            <span class="news__importance" :class="`news__importance--${Importance}`"></span>
-            <span>{{EventName}}</span>
-          </div>
-          <div class="news__previous">
-            {{PreviousValue}}
-          </div>
-          <div class="news__forecast">
-            {{ForecastValue}}
-          </div>
-          <div class="news__actual" :class="`news__actual--${ImpactDirection}`">
-            <strong>{{ActualValue}}</strong>
+          <div class="news__chart" v-if="historicData[Id]">
+            
+              <div v-if="historicData[Id].length">
+                  
+                 <Chart :raw="historicData[Id]" />
+
+              </div>
+              <h4 v-else>LOADING</h4>
+
           </div>
         </li>
       </ul>
@@ -33,17 +46,25 @@
 
 <script>
 
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import NewsTableHeader from './NewsTableHeader.vue';
 
 export default {
   name: 'News',
   components: {
     NewsTableHeader,
+    Chart: () => import('./Chart.vue')
   },
   computed: mapState([
-    'newsList'
-  ])
+    'newsList',
+    'historicData'
+  ]),
+  methods: {
+  ...mapActions([
+    'fetchHistoricData',
+  ]),
+
+}
 }
 
 </script>
@@ -64,7 +85,7 @@ export default {
     text-align: center;
   }
 
-  .news__item {
+  .news__wrap {
     display: flex;
     align-items: center;
     padding: 10px;
