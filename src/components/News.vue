@@ -5,8 +5,8 @@
     <div class="news__day" v-for="({ dayName, list }, key) in newsList" :key="key">
       <h4 class="news__day-name">{{dayName}}</h4>
       <ul class="news__items">
-        <li class="news__item" v-for="{ Importance, EventName, CurrencyCode, formattedTime, PreviousValue, ForecastValue, ActualValue, ImpactDirection, Id, Url } in list" :key="Id" @click="fetchHistoricData({newsItemId: Id, newsItemUrl: Url})">
-          <div class="news__wrap">
+        <li class="news__item" v-for="{ Importance, EventName, CurrencyCode, formattedTime, PreviousValue, ForecastValue, ActualValue, ImpactDirection, Id, Url } in list" :key="Id">
+          <div class="news__wrap" @click="toggleHistoricDataChart(Id, Url)">
             <div class="news__time">
               {{formattedTime}}
             </div>
@@ -27,9 +27,9 @@
               <strong>{{ActualValue}}</strong>
             </div>
           </div>
-          <div class="news__chart" v-if="historicData[Id]">
+          <div class="news__chart" v-if="ui.expandedCharts.indexOf(Id) >= 0">
             
-              <div v-if="historicData[Id].length">
+              <div v-if="historicData[Id] && historicData[Id].length">
                   
                  <Chart :raw="historicData[Id]" />
 
@@ -55,16 +55,39 @@ export default {
     NewsTableHeader,
     Chart: () => import('./Chart.vue')
   },
+  data: () => ({
+    ui: {
+      expandedCharts: []
+    }
+  }),
   computed: mapState([
     'newsList',
     'historicData'
   ]),
   methods: {
-  ...mapActions([
-    'fetchHistoricData',
-  ]),
+    ...mapActions([
+      'fetchHistoricData',
+    ]),
+    toggleHistoricDataChart(id, url) {
 
-}
+      const idIndex = this.ui.expandedCharts.indexOf(id);
+      const isExpanded = idIndex >= 0;
+
+      if (isExpanded) {
+
+        this.ui.expandedCharts.splice(idIndex, 1);
+
+      } else {
+        this.ui.expandedCharts.push(id);
+
+        if (!this.historicData[id]) {
+          this.fetchHistoricData({newsItemId: id, newsItemUrl: url})
+        }
+
+      }
+
+    }
+  }
 }
 
 </script>
@@ -158,6 +181,10 @@ export default {
 
   .news__actual--2 {
     color: #ff5050;
+  }
+  
+  .news__chart {
+    height: 200px;
   }
 
 </style>
