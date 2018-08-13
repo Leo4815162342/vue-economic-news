@@ -34,7 +34,7 @@
                  <Chart :raw="historicData[Id]" />
 
               </div>
-              <h4 v-else>LOADING</h4>
+              <h4 v-else>...</h4>
 
           </div>
         </li>
@@ -185,6 +185,8 @@ export default {
   
   .news__chart {
     height: 200px;
+    text-align: center;
+    line-height: 200px;
   }
 
 </style>
