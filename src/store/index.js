@@ -12,11 +12,8 @@ const store = new Vuex.Store({
     updateNewsList (state, { newsList }) {
       state.newsList = newsList;
     },
-    initHistoricData(state, { newsItemId }) {
-      Vue.set(state.historicData, newsItemId, []);
-    },
     updateHistoricData(state, { newsItemId, historicDataArr }) {
-      state.historicData[newsItemId] = historicDataArr;
+      Vue.set(state.historicData, newsItemId, historicDataArr);
     },
     toggleNewsLoadingIndication(state, { flag }) {
       state.isFetching = flag;
@@ -71,10 +68,8 @@ const store = new Vuex.Store({
 
     },
     async fetchHistoricData(context, { newsItemId, newsItemUrl }) {
-      
+
       console.log('Fetching historic data for', newsItemId);
-      
-      context.commit('initHistoricData', { newsItemId });
 
       try {
         
