@@ -137,6 +137,7 @@ export default {
 .header__lang-list {
   background-color: #2f2f2ffa;
   line-height: 14px;
+  z-index: 9;
 }
 
 .header__lang-item {
