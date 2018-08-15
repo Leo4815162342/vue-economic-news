@@ -20,10 +20,12 @@ export default {
   },
   data: () => ({
     chartOptions: {
-      legend: {
-        position: 'bottom'
-      },
-      chartArea:{width: '100%', top: 20, left: 40, right: 25, bottom: 50 }
+      legend: 'none',
+      focusTarget: 'category',
+      chartArea:{width: '100%', top: 20, left: 40, right: 25, bottom: 50 },
+      hAxis: {
+        format: 'y'
+      }
     }
   }),
   computed: {
