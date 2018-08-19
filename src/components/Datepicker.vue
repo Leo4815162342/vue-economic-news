@@ -1,5 +1,5 @@
 <template>
-  <div class="header__menu-item" :class="{ 'header__menu-item--selected': isCalOpen }">
+  <div class="header__menu-item" :class="{ 'header__menu-item--selected': ui.isCalOpen }">
     <flat-pickr
       v-model="date"
       class="header__menu-item--datepicker"
@@ -50,7 +50,9 @@ export default {
         static: true,
         locale: null
       },
-      isCalOpen: false
+      ui: {
+        isCalOpen: false
+      }
     }
   },
   computed: {
@@ -96,10 +98,10 @@ export default {
 
     },
     onDatepickerOpen() {
-      this.isCalOpen = true;
+      this.ui.isCalOpen = true;
     },
     onDatepickerClose() {
-      this.isCalOpen = false;
+      this.ui.isCalOpen = false;
       this.resetDates();
     },
     setDatepickerLang(lang) {
