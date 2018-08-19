@@ -21,9 +21,21 @@ import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'Languages',
+  data() {
+    return {
+      langs: {
+        ru: 'Русский',
+        en: 'English',
+        es: 'Español',
+        zh: '中文',
+        pt: 'Português',
+        ja: '日本語',
+        de: 'Deutsch'
+      }
+    }
+  },
   computed: {
     ...mapState([
-      'langs',
       'currentLang'
     ])
   },
