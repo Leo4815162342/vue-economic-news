@@ -61,11 +61,7 @@ export default {
     ])
   },
   watch: {
-    currentLang: function(lang) {
-      this.datePickerConfig.locale = calendarLangMap[lang];
-      // trigger date selector title to change
-      this.resetDates();
-    }
+    currentLang: 'setDatepickerLang'
   },
   methods: {
     ...mapActions([
@@ -106,8 +102,8 @@ export default {
       this.isCalOpen = false;
       this.resetDates();
     },
-    onLangChange(lang) {
-      this.datePickerConfig.locale = calendarLangMap[lang || this.currentLang];
+    setDatepickerLang(lang) {
+      this.datePickerConfig.locale = calendarLangMap[lang];
       this.resetDates();
     },
     resetDates() {
@@ -116,8 +112,7 @@ export default {
     },
   },
   created() {
-    this.datePickerConfig.locale = calendarLangMap[this.currentLang];
-    this.resetDates();
+    this.setDatepickerLang(this.currentLang);
   }
 }
 </script>
