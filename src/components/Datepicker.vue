@@ -106,12 +106,17 @@ export default {
       this.isCalOpen = false;
       this.resetDates();
     },
+    onLangChange(lang) {
+      this.datePickerConfig.locale = calendarLangMap[lang || this.currentLang];
+      this.resetDates();
+    },
     resetDates() {
-      console.log('RESET DATES');
+      console.log('RESET DATES')
       this.date = [this.dateFrom, this.dateTo];
     },
   },
   created() {
+    this.datePickerConfig.locale = calendarLangMap[this.currentLang];
     this.resetDates();
   }
 }
