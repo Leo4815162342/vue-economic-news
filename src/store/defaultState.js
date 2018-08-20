@@ -12,7 +12,7 @@ const defaultState = {
   dateTo: toIsoDate,
   filters: {
     currencies: ['USD', 'EUR', 'JPY', 'GBP', 'CAD', 'AUD', 'CHF', 'CNY', 'ALL'],
-    importance: ['low', 'medium', 'high']
+    importance: ['none', 'low', 'medium', 'high']
   },
   isFetching: true,
   errors: null
