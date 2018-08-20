@@ -5,7 +5,7 @@
     <div class="news__day" v-for="({ dayName, list }, key) in newsList" :key="key">
       <h4 class="news__day-name">{{dayName}}</h4>
       <ul class="news__items">
-        <li class="news__item" v-for="{ Importance, EventName, CurrencyCode, formattedTime, PreviousValue, ForecastValue, ActualValue, ImpactDirection, Id, Url } in list" :key="Id">
+        <li class="news__item" v-for="{ Importance, EventName, CurrencyCode, formattedTime, PreviousValue, ForecastValue, ActualValue, ImpactDirection, Id, Url } in list" :key="Id" v-show="isNewsItemVisible(CurrencyCode, Importance)">
           <div class="news__wrap" @click="toggleHistoricDataChart(Id, Url)">
             <div class="news__time">
               {{formattedTime}}
@@ -60,10 +60,13 @@ export default {
       expandedCharts: []
     }
   }),
-  computed: mapState([
-    'newsList',
-    'historicData'
-  ]),
+  computed: {
+    ...mapState([
+      'newsList',
+      'historicData',
+      'filters'
+    ])
+  },
   methods: {
     ...mapActions([
       'fetchHistoricData',
@@ -86,6 +89,13 @@ export default {
 
       }
 
+    },
+    isNewsItemVisible(currency, importance) {
+
+      const currencyVisible = this.filters.currencies.indexOf(currency) >= 0;
+      const importanceVisible = this.filters.importance.indexOf(importance) >= 0;
+
+      return currencyVisible && importanceVisible;
     }
   }
 }

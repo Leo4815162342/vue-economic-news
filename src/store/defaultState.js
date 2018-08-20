@@ -10,6 +10,10 @@ const defaultState = {
   historicData: {},
   dateFrom: fromIsoDate,
   dateTo: toIsoDate,
+  filters: {
+    currencies: ['USD', 'EUR', 'JPY', 'GBP', 'CAD', 'AUD', 'CHF', 'CNY'],
+    importance: ['low', 'medium', 'high']
+  },
   isFetching: true,
   errors: null
 }

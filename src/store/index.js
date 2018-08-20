@@ -51,7 +51,7 @@ const store = new Vuex.Store({
         } else {
 
           context.commit('setError', {
-            errorObj: new Error('Response is not an array or empty array')
+            errorObj: new Error('Response for news list is not an object or empty object')
           });
 
         }
@@ -76,8 +76,11 @@ const store = new Vuex.Store({
         const historicDataArr = await getHistoricData(newsItemUrl);
         
         if (Array.isArray(historicDataArr) && historicDataArr.length) {
-
           context.commit('updateHistoricData', { newsItemId, historicDataArr });
+        } else {
+          context.commit('setError', {
+            errorObj: new Error('Response for historic data is not an array or empty array')
+          });
         }
 
       } catch(err) {
