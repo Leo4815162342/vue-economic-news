@@ -32,6 +32,7 @@ export default {
 
 html {
   overflow-y: scroll;
+  height: 100%;
 }
 
 body {
@@ -39,6 +40,7 @@ body {
   padding: 0;
   background: #b5b5b5;
   overflow-x: hidden;
+  height: 100%;
 }
 
 ul, li {
@@ -56,6 +58,7 @@ h1, h2, h3, h4, h5 {
 }
 
 #app {
+  height: inherit;
   font-family: 'Work Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
