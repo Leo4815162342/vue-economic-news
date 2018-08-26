@@ -8,3 +8,5 @@ styles of charts need to match with respecitve row bg color
 loading indicator for charts
 NewsTableHeader async?
 explore Lifecycle Hooks for proper lang change of chart
+sticky table header?
+parse all the prev history and as JSON
