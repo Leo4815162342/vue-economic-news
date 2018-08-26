@@ -8,14 +8,14 @@ function getNormalizeNewsList({textData, lang, dateFrom, dateTo}) {
     toEndOfDayMs
   ] = [dateFrom, dateTo].map(a => DateTime.fromISO(a).endOf('day').toMillis());
 
-  const res = JSON.parse(textData.replace(/<!--[\s\S]*?-->/g, "")).reduce((all, item) => {
+  const dataObj = JSON.parse(textData.replace(/<!--[\s\S]*?-->/g, "")).reduce((all, item) => {
     const { ReleaseDate } = item;
 
     const dt = DateTime.fromMillis(ReleaseDate);
 
-    const endOfDay = dt.endOf('day').toMillis();
+    const endOfDayMs = dt.endOf('day').toMillis();
 
-    const isInRange = endOfDay >= fromEndOfDayMs && endOfDay <= toEndOfDayMs;
+    const isInRange = endOfDayMs >= fromEndOfDayMs && endOfDayMs <= toEndOfDayMs;
 
     if (!isInRange) {
       return all;
@@ -24,18 +24,30 @@ function getNormalizeNewsList({textData, lang, dateFrom, dateTo}) {
     const dayName = dt.setLocale(lang).toLocaleString(Object.assign({ weekday: 'long' }, DateTime.DATE_HUGE));
     const formattedTime = dt.toLocaleString(DateTime.TIME_24_SIMPLE);
 
-    if (!all.hasOwnProperty(endOfDay)) {
-      all[endOfDay] = {
+    if (!all.hasOwnProperty(endOfDayMs)) {
+      all[endOfDayMs] = {
         dayName,
         list: []
       };
     }
     
-    all[endOfDay].list.push(Object.assign({}, item, {formattedTime}));
+    all[endOfDayMs].list.push(Object.assign({}, item, {formattedTime}));
 
     return all;
 
   }, {});
+  
+  const res = Object.keys(dataObj).map(endOfDayMs => {
+    
+    const { dayName, list } = dataObj[endOfDayMs];
+
+    return {
+      endOfDayMs,
+      dayName,
+      list
+    }
+
+  });
 
   return res;
 }
