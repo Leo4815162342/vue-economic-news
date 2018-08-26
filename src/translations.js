@@ -61,6 +61,38 @@ const translations = {
       pt: 'Importância',
       ja: '重要性',
       de: 'Bedeutung'
+    },
+    USD:{
+        en: 'US dollar',
+        ru: 'Доллар США'
+    },
+    EUR:{
+        en: 'Euro',
+        ru: 'Евро'
+    },
+    JPY:{
+        en: 'Japanese yen',
+        ru: 'Японская иена'
+    },
+    GBP:{
+        en: 'Pound sterling',
+        ru: 'Фунт стерлингов'
+    },
+    CAD:{
+        en: 'Canadian dollar',
+        ru: 'Канадский доллар'
+    },
+    AUD:{
+        en: 'Australian Dollar',
+        ru: 'Австралийский доллар'
+    },
+    CHF:{
+        en: 'Swiss frank',
+        ru: 'Швейцарский франк'
+    },
+    CNY:{
+        en: 'Chinese yuan',
+        ru: 'Китайский юань'
     }
 };
 

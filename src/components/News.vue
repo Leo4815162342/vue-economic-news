@@ -2,10 +2,10 @@
   
   <div class="news">
     <NewsTableHeader />
-    <div class="news__day" v-for="({ dayName, list }, key) in newsList" :key="key">
+    <div class="news__day" v-for="{ dayName, list, endOfDayMs } in filteredNewsList" :key="endOfDayMs">
       <h4 class="news__day-name">{{dayName}}</h4>
       <ul class="news__items">
-        <li class="news__item" v-for="{ Importance, EventName, CurrencyCode, formattedTime, PreviousValue, ForecastValue, ActualValue, ImpactDirection, Id, Url } in list" :key="Id" v-show="isNewsItemVisible(CurrencyCode, Importance)">
+        <li class="news__item" v-for="{ Importance, EventName, CurrencyCode, formattedTime, PreviousValue, ForecastValue, ActualValue, ImpactDirection, Id, Url } in list" :key="Id">
           <div class="news__wrap" @click="toggleHistoricDataChart(Id, Url)">
             <div class="news__time">
               {{formattedTime}}
@@ -46,7 +46,7 @@
 
 <script>
 
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapGetters, mapActions } from 'vuex';
 import NewsTableHeader from './NewsTableHeader.vue';
 
 export default {
@@ -64,7 +64,9 @@ export default {
     ...mapState([
       'newsList',
       'historicData',
-      'filters'
+    ]),
+    ...mapGetters([
+      'filteredNewsList'
     ])
   },
   methods: {
@@ -90,13 +92,6 @@ export default {
       }
 
     },
-    isNewsItemVisible(currency, importance) {
-
-      const currencyVisible = this.filters.currencies.indexOf(currency) >= 0;
-      const importanceVisible = this.filters.importance.indexOf(importance) >= 0;
-
-      return currencyVisible && importanceVisible;
-    }
   }
 }
 

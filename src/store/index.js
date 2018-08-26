@@ -29,6 +29,11 @@ const store = new Vuex.Store({
     },
     setToDate(state, { date }) {
       state.dateTo = date;
+    },
+    toggleFilterItem(state, { type, item }) {
+
+      state.filters[type][item] = !state.filters[type][item];
+
     }
   },
   actions: {
@@ -44,14 +49,14 @@ const store = new Vuex.Store({
 
         console.log(newsList);
 
-        if (typeof newsList === 'object' && Object.keys(newsList).length) {
+        if (Array.isArray(newsList) && newsList.length) {
 
           context.commit('updateNewsList', { newsList });
 
         } else {
 
           context.commit('setError', {
-            errorObj: new Error('Response for news list is not an object or empty object')
+            errorObj: new Error('Response for news list is not an array or empty array')
           });
 
         }
@@ -100,15 +105,38 @@ const store = new Vuex.Store({
     },
     setToDate(context, { date }) {
       context.commit('setToDate', { date });
+    },
+    toggleFilterItem(context, { type, item }) {
+      context.commit('toggleFilterItem', { type, item });
     }
   },
   getters: {
-    // allLangs: state => {
-    //   return Object.keys(state.langs).map(code => ({ code, name: state.langs[code]}))
-    // }
-    // datesRange: state => {
-    //   return [state.dateFrom, state.dateTo]
-    // }
+    filteredNewsList: (state) => {
+      return state.newsList.reduce((all, { dayName, list, endOfDayMs }) => {
+
+        const filteredDayList = list.filter(({ CurrencyCode, Importance }) => {
+
+          return (
+            state.filters.currencies[CurrencyCode] &&
+            state.filters.importance[Importance]
+          );
+
+        });
+
+        if (!filteredDayList.length) {
+          return all;
+        }
+        
+        all.push({
+          dayName,
+          endOfDayMs,
+          list: filteredDayList
+        });
+
+        return all;
+
+      }, []);
+    }
   }
 });
 
