@@ -8,8 +8,8 @@
 <script>
 
 import { mapActions } from 'vuex';
-import Header from './components/Header.vue';
-import News from './components/News.vue';
+import Header from './components/header/Header.vue';
+import News from './components/news/News.vue';
 
 export default {
   name: 'app',

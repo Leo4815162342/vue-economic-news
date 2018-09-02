@@ -127,7 +127,7 @@ export default {
   width: 14px;
   height: 14px;
   background-color: #999;
-  -webkit-mask: url(./../assets/calendar.svg) center / contain no-repeat;
+  -webkit-mask: url(./../../assets/calendar.svg) center / contain no-repeat;
   background-size: 14px 14px;
   top: 50%;
   right: 0;

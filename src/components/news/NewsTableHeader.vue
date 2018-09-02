@@ -46,7 +46,7 @@
 <script>
 
 import { mapState, mapActions } from 'vuex';
-import translations from './../translations.js';
+import translations from './../../translations.js';
 
 export default {
   name: 'NewsTableHeader',

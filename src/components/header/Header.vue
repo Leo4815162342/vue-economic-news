@@ -2,7 +2,7 @@
     <div class="header" :class="{ 'header--loading': isFetching }">
       <div class="header__inner">
         <div class="header__logo">
-          <img src="./../assets/flamingo.svg" width="24" height="24">
+          <img src="./../../assets/flamingo.svg" width="24" height="24">
           <h1>Economic News</h1>
         </div>
        

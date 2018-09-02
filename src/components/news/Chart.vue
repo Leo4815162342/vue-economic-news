@@ -13,7 +13,7 @@
 import { mapState } from 'vuex';
 import { GChart } from 'vue-google-charts';
 
-import translations from './../translations.js';
+import translations from './../../translations.js';
 
 export default {
   name: 'Chart',
