@@ -40,7 +40,7 @@ body {
   padding: 0;
   background: #b5b5b5;
   overflow-x: hidden;
-  height: 100%;
+  min-height: 100%;
 }
 
 ul, li {
@@ -65,5 +65,18 @@ h1, h2, h3, h4, h5 {
   color: #2c3e50;
 }
 
+.sub {
+  position: relative;
+}
 
+.sub:hover .sub__menu {
+  display: block;
+}
+
+.sub__menu {
+  display: none;
+  position: absolute;
+  text-align: left;
+  background-color: #3b3b3bfa;
+}
 </style>

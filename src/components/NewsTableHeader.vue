@@ -3,12 +3,13 @@
     <div class="news__time">
       {{translations.time[currentLang]}}
     </div>
-    <div class="news__currency">
+    <div class="news__currency sub">
       <div class="news__currency-label">{{translations.currency[currentLang]}}</div>
-      <ul class="news__currency-list">
+      <ul class="news__filter sub__menu">
         <li
           v-for="(isActive, currency) in filters.currencies"
-          :class="`news__currency-list-item ${isActive ? 'news__currency-list-item--active' : ''}`"
+          class="news__filter-item sub__menu-item"
+          :class="{'news__filter-item--active': isActive}"
           :key="currency"
           @click="toggleFilterItem({type: 'currencies', item: currency})"
         >
@@ -16,8 +17,19 @@
         </li>
       </ul>
     </div>
-    <div class="news__name">
-      <div>{{translations.event[currentLang]}}</div>
+    <div class="news__name sub">
+      <div class="news__name-label">{{translations.event[currentLang]}}</div>
+      <ul class="news__filter sub__menu">
+        <li
+          v-for="(isActive, imp) in filters.importance"
+          class="news__filter-item sub__menu-item"
+          :class="{'news__filter-item--active': isActive}"
+          :key="imp"
+          @click="toggleFilterItem({type: 'importance', item: imp})"
+        >
+          <span>{{translations[imp][currentLang]}}</span>
+        </li>
+      </ul>
     </div>
     <div class="news__previous">
       {{translations.previous[currentLang]}}
@@ -65,38 +77,47 @@ export default {
   .news__header {
     display: flex;
     align-items: center;
-    padding: 10px;
     font-size: 14px;
+    padding: 0 10px;
     background-color: #2f2f2f;
     color: #fff;
   }
   
+  .news__header > div {
+    height: 35px;
+    line-height: 35px;
+  }
+
   .news__currency {
     position: relative;
   }
 
   .news__currency-label {
-    text-decoration: underline;
     cursor: pointer;
   }
 
-  .news__currency-list {
+  .news__filter {
     position: absolute;
-    top: 26px;
+    top: 35px;
     left: 0;
     width: 200px;
     background-color: #2f2f2f;
-    padding: 10px;
     text-align: left;
     z-index: 9;
   }
 
-  .news__currency-list-item {
-    margin-bottom: 10px;
+  .news__filter-item {
+    opacity: 0.5;
+    padding: 10px;
+    line-height: initial;
   }
   
-  .news__currency-list-item:last-child {
+  .news__filter-item:last-child {
     margin-bottom: 0;
+  }
+  
+  .news__filter-item--active {
+    opacity: 1.0;
   }
 
 </style>

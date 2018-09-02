@@ -31,9 +31,7 @@ const store = new Vuex.Store({
       state.dateTo = date;
     },
     toggleFilterItem(state, { type, item }) {
-
       state.filters[type][item] = !state.filters[type][item];
-
     }
   },
   actions: {

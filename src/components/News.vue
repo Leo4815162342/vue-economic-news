@@ -13,7 +13,7 @@
             <div class="news__currency">
               {{CurrencyCode}}
             </div>
-            <div class="news__name">
+            <div class="news__name news__name--cut">
               <span class="news__importance" :class="`news__importance--${Importance}`"></span>
               <span class="news__name-text">{{EventName}}</span>
             </div>
@@ -167,6 +167,9 @@ export default {
   .news__name {
     flex: 0 0 500px;
     padding: 0 10px;
+  }
+  
+  .news__name--cut {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

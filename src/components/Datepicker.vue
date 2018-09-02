@@ -1,8 +1,7 @@
 <template>
-  <div class="header__menu-item" :class="{ 'header__menu-item--selected': ui.isCalOpen }">
+  <div class="header__menu-item header__datepicker" :class="{ 'header__menu-item--selected': ui.isCalOpen }">
     <flat-pickr
       v-model="date"
-      class="header__menu-item--datepicker"
       :config="datePickerConfig"
       @on-change="onDateSelect"
       @on-open="onDatepickerOpen"
@@ -141,7 +140,7 @@ export default {
   background-color: #fff;
 }
 
-.header__menu-item--datepicker {
+.flatpickr-input {
   display: inline-block;
   height: 50px;
   line-height: 50px;
@@ -157,7 +156,7 @@ export default {
   cursor: pointer;
 }
 
-.header__menu-item--selected .header__menu-item--datepicker {
+.header__menu-item--selected .flatpickr-input {
   color: #fff;
 }
 

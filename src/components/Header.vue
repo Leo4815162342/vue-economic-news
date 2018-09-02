@@ -107,68 +107,9 @@ export default {
 }
 
 .header__menu-item:hover,
-.header__menu-item--datepicker:hover,
+.flatpickr-input:hover,
 .header__menu-item--selected {
   color: #fff;
-}
-
-.header__menu-item--dropdown {
-  position: relative;
-  padding-right: 12px;
-}
-
-.header__menu-item--dropdown:after {
-  position: absolute;
-  content: '';
-  top: 50%;
-  margin-top: -1px;
-  right: 0px;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 4px 4px 0 4px;
-  border-color: #999 transparent transparent transparent;
-}
-
-.header__menu-item--dropdown:hover:after {
-  border-color: #fff transparent transparent transparent;
-}
-
-.header__lang-list {
-  background-color: #2f2f2ffa;
-  line-height: 14px;
-  z-index: 9;
-}
-
-.header__lang-item {
-  min-width: 100px;
-  padding: 10px 10px;
-  font-size: 14px;
-  color: #ccc;
-}
-
-.header__lang-item:hover {
-  color: #fff;
-  background-color: #ea4c89;
-}
-
-.sub {
-  position: relative;
-  width: 65px;
-  text-align: right;
-}
-
-.sub:hover .sub__menu {
-  display: block;
-}
-
-.sub__menu {
-  display: none;
-  position: absolute;
-  top:50px;
-  /*left: -10px;*/
-  background-color: #3b3b3bfa;
-  text-align: left;
 }
 
 @keyframes loader-animations {

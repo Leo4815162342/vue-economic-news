@@ -12,7 +12,7 @@ const defaultState = {
   dateTo: toIsoDate,
   filters: {
     currencies: {
-      USD: false,
+      USD: true,
       EUR: true,
       JPY: true,
       GBP: true,
