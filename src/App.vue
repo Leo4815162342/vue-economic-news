@@ -79,4 +79,30 @@ h1, h2, h3, h4, h5 {
   text-align: left;
   background-color: #3b3b3bfa;
 }
+
+
+.checkbox {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 1px solid #9d3c61;
+  vertical-align: bottom;
+  margin-right: 7px;
+}
+
+.checkbox--active {
+  background-color: #ea4c89;
+}
+
+.checkbox--active:after {
+  content: '';
+  display: block;
+  width: 3px;
+  height: 6px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: translate3d(3px,1px,0) rotate(45deg);
+}
+
+
 </style>

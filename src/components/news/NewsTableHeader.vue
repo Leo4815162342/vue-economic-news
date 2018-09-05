@@ -13,7 +13,7 @@
           :key="currency"
           @click="toggleFilterItem({type: 'currencies', item: currency})"
         >
-          <span>{{currency}}</span> - <span>{{translations[currency][currentLang]}}</span>
+          <span class="checkbox" :class="{'checkbox--active': isActive}"></span><span>{{currency}}</span> - <span>{{translations[currency][currentLang]}}</span>
         </li>
       </ul>
     </div>
@@ -27,7 +27,7 @@
           :key="imp"
           @click="toggleFilterItem({type: 'importance', item: imp})"
         >
-          <span>{{translations[imp][currentLang]}}</span>
+          <span class="checkbox" :class="{'checkbox--active': isActive}"></span><span>{{translations[imp][currentLang]}}</span>
         </li>
       </ul>
     </div>
@@ -100,16 +100,17 @@ export default {
     position: absolute;
     top: 35px;
     left: 0;
-    width: 200px;
+    width: 250px;
     background-color: #2f2f2f;
     text-align: left;
     z-index: 9;
   }
 
   .news__filter-item {
-    opacity: 0.5;
     padding: 10px;
     line-height: initial;
+    color: #9d9d9d;
+    cursor: pointer;
   }
   
   .news__filter-item:last-child {
@@ -117,7 +118,11 @@ export default {
   }
   
   .news__filter-item--active {
-    opacity: 1.0;
+    color: #fff;
+  }
+  
+  .news__filter-item:hover {
+    background-color: #4c4b4b;
   }
 
 </style>
