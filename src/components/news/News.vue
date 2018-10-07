@@ -149,7 +149,6 @@ export default {
     object-position: center;
     width: 24px;
     height: 14px;
-    border: 1px solid #e8e8e8;
     box-sizing: border-box;
   }
   
