@@ -11,7 +11,13 @@
               {{formattedTime}}
             </div>
             <div class="news__currency">
-              {{CurrencyCode}}
+              <img
+                class="news__flag"
+                :class="`news__flag--${CurrencyCode}`"
+                :src="require(`./../../assets/flags/${CurrencyCode}.svg`)"
+                :alt="CurrencyCode"
+              >
+              <span>{{CurrencyCode}}</span>
             </div>
             <div class="news__name news__name--cut">
               <span class="news__importance" :class="`news__importance--${Importance}`"></span>
@@ -137,13 +143,39 @@ export default {
     text-align: center;
     padding-right: 10px;
   }
-
-  .news__currency {
-    flex: 0 0 70px;
-    padding: 0 10px;
-    text-align: center;
+  
+  .news__flag {
+    object-fit: cover;
+    object-position: center;
+    width: 24px;
+    height: 14px;
+    border: 1px solid #e8e8e8;
+    box-sizing: border-box;
   }
   
+  .news__flag--CHF {
+    object-fit: contain;
+    border: none;
+  }
+  
+  .news__flag--USD,
+  .news__flag--CNY,
+  .news__flag--AUD {
+    object-position: left top;
+  }
+
+  .news__currency {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex: 0 0 70px;
+    padding: 0 10px;
+  }
+  
+  .news__header .news__currency {
+    text-align: center;
+  }
+
   .news__importance {
     display: inline-block;
     width: 10px;
