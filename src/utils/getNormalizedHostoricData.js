@@ -1,3 +1,5 @@
+import { DateTime } from 'luxon';
+
 export default function getNormalizedHostoricData(textData) {
 
   if (!textData) {
