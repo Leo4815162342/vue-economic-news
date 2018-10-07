@@ -165,7 +165,7 @@ export default {
   }
 
   .news__name {
-    flex: 0 0 500px;
+    flex: 0 0 400px;
     padding: 0 10px;
   }
   
