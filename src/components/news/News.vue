@@ -133,8 +133,9 @@ export default {
   }
 
   .news__time {
-    flex: 0 0 60px;
+    flex: 0 0 40px;
     text-align: center;
+    padding-right: 10px;
   }
 
   .news__currency {
@@ -181,6 +182,10 @@ export default {
     flex: 1 0 5%;
     padding: 0 10px;
     text-align: center;
+  }
+  
+  .news__actual {
+    padding-right: 0;
   }
 
   .news__actual--1 {
