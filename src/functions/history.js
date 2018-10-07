@@ -4,12 +4,12 @@ exports.handler = async function(event, context) {
 
     // /.netlify/functions/history?origin=
 
-// /en/economic-calendar/widget/japan/foreign-investment-in-japan-stocks
-  // /en/economic-calendar/japan/foreign-investment-in-japan-stocks/export
+    // /en/economic-calendar/widget/japan/foreign-investment-in-japan-stocks
+    // /en/economic-calendar/japan/foreign-investment-in-japan-stocks/export
 
-    const { origin } = event.queryStringParameters;
+    const { "event-url": eventUrl } = event.queryStringParameters;
 
-    const url = `https://www.mql5.com${origin.replace('/widget/','/')}/export`;
+    const url = `https://www.mql5.com${eventUrl.replace('/widget/','/')}/export`;
 
     const data = await getDataFromUrl(url);
 

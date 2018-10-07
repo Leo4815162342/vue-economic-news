@@ -18,7 +18,7 @@ async function getNewsList({dateFrom, dateTo, lang}) {
 
 async function getHistoricData(newItemUrl) {
 
-  const url = `${API_ROOT}/history?origin=${newItemUrl}`;
+  const url = `${API_ROOT}/history?event-url=${newItemUrl}`;
 
   const res = await fetch(encodeURI(url));
 
