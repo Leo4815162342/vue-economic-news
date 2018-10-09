@@ -12,3 +12,4 @@ sticky table header?
 parse all the prev history and as JSON
 PLACEHOLDER DATA?
 refactor news as table???
+add subscription to news and notifications

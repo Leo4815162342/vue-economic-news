@@ -4,8 +4,11 @@ const today = DateTime.fromJSDate(new Date);
 const fromIsoDate = today.minus({days: 3}).toISODate();
 const toIsoDate = today.plus({days: 3}).toISODate();
 
+const supportedLangs = ['ru','es','zh','pt','ja','de']
+const browserLang = navigator.language || navigator.userLanguage;
+
 const defaultState = {
-  currentLang: 'en',
+  currentLang: supportedLangs.indexOf(browserLang) >=0 && browserLang || 'en',
   newsList: [],
   historicData: {},
   dateFrom: fromIsoDate,
