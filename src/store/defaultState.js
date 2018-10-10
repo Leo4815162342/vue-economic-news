@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon';
 
 const today = DateTime.fromJSDate(new Date);
-const fromIsoDate = today.minus({days: 3}).toISODate();
-const toIsoDate = today.plus({days: 3}).toISODate();
+const fromIsoDate = today.toISODate();
+const toIsoDate = today.plus({days: 7}).toISODate();
 
 const supportedLangs = ['ru','es','zh','pt','ja','de']
 const browserLang = navigator.language || navigator.userLanguage;
